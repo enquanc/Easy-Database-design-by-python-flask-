@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+
+    <link href='../static/styles/font.css' rel='stylesheet' type='text/css' />
+    <link href='../static/styles/nav.css' rel='stylesheet' type='text/css' />
+    <link href='../static/images/cow_icon_w.ico' , rel='shortcut icon' />
+    <link href="../static/images/cow_icon_w.ico" , rel='bookmark' />
+
+</head>
+
+<body>
+
+
+    {% macro page(data,url)%}
+
+    <head>
+        <link href='../static/bootstrap-5.3.2-dist/css/bootstrap-grid.min.css' rel='stylesheet' type='text/css' />
+    </head>
+
+    {% if data %}
+    <!-- 如果有data -->
+    <!-- <ul class='pagination pagination-sm no-margin pull-right mx-auto'> -->
+    <ul class='pagination pagination-sm justify-content-center'>
+
+        <li class="page-item">
+            <a href='{{url_for(url,page=1)}}' class="page-link">第一頁</a>
+        </li>
+
+        {% if data.has_prev %}
+        <!--如果有上一頁-->
+
+        <li class="page-item">
+            <a href='{{url_for(url,page=data.prev_num)}}' class="page-link">&laquo;</a>
+            <!-- &laquo; 往左的箭頭 -->
+        </li>
+
+        {% else %}
+        <li class='page-item disabled'><a href='#' class="page-link">&laquo;</a></li>
+
+        {% endif %}
+
+        {% if data.pages >5 %}
+        <!--如果總頁數大於5-->
+        {% if data.page < 4 %} <!--如果當前頁數小於4-->
+            {% if data.page != 3 %}
+            {%for i in range(1,5) %}
+            <!--會顯示1~4頁的分頁頁籤-->
+            {% if i == data.page %}
+            <!--當前的頁籤-->
+            <li class="page-item active">
+                <a href='#' class="page-link">{{i}} </a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a href='{{url_for(url,page=i)}}' class="page-link">{{i}}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            {%elif data.page == 3 %}
+            <!-- 如果現在在第3頁 -->
+            {%for i in range(1,6) %}
+            <!-- 顯示1~5頁 -->
+            {% if i == data.page %}
+            <!--當前的頁籤-->
+            <li class='page-item active'>
+                <a href='#' class="page-link">{{i}} </a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a href='{{url_for(url,page=i)}}' class="page-link">{{i}}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+
+            {%elif (data.pages-data.page) < 3 %} <!--如果當前頁數和最多頁數相差大於3頁-->
+                {%for i in range(data.pages-3,data.pages+1) %}
+                <!--製作後三頁的頁籤和最後一頁的頁籤-->
+                {%if i==data.page%}
+                <!--當前的頁籤-->
+                <li class='page-item active'>
+                    <a href='#' class="page-link">{{i}}</a>
+                </li>
+                {%else%}
+                <li class="page-item">
+                    <a href="{{url_for(url,page=i)}}" class="page-link">{{i}}</a>
+                </li>
+                {%endif%}
+                {% endfor %}
+                {% else %}
+                <!--當前的頁面不在前三頁也不在後三頁-->
+                {%for i in range(data.page-3,data.page+4) %}
+                <!--製作當前頁面的前三頁和後三頁的頁籤-->
+                {% if i == data.page %}
+                <li class='page-item active'>
+                    <a href='#' class="page-link"> {{i}} </a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a href='{{url_for(url,page=i)}}' class="page-link">{{i}}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% else %}
+                <!--如果總頁數小於等於5-->
+                {%for v in data.iter_pages() %}
+                {% if v==data.page %}
+                <li class="page-item active">
+                    <a href='#' class="page-link"> {{v}} </a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a href='{{url_for(url,page=v)}}' class="page-link">{{v}}</a>
+                </li>
+                {% endif %}
+                {%endfor%}
+                {% endif %}
+                {% if data.has_next %}
+                <li class="page-item">
+                    <a href='{{url_for(url,page=data.next_num)}}' class="page-link">&raquo;</a>
+                </li>
+                {% else %}
+                <li class='page-item disabled'>
+                    <a href='#' class="page-link">&raquo;</a>
+                    <!-- &raquo; 往右的箭頭 -->
+                </li>
+                {% endif %}
+                <li class="page-item">
+                    <a href='{{url_for(url,page=data.pages)}}' class="page-link">最後一頁({{data.pages}})</a>
+                </li>
+
+    </ul>
+    <script src="../static/bootstrap-5.3.2-dist/js/popper.min.js"></script>
+    <script src="../static/bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
+    {% endif %}
+    {% endmacro %}
+
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href='../static/bootstrap-5.3.2-dist/css/bootstrap.min.css' rel='stylesheet' type='text/css' />
+    <link href='../static/styles/font.css' rel='stylesheet' type='text/css' />
+    <link href='../static/styles/nav.css' rel='stylesheet' type='text/css' />
+
+</head>
+
+<body>
+    {%- for message in get_flashed_messages() %}
+    <script>
+        alert('{{ message }}')
+    </script>
+    {%- endfor %}
+    <h1 class="text-center">請輸入欲查詢之課程編碼和日期區段</h1>
+    <a href="{{url_for('home')}}" class='btn btn-success'>Back to the homepage</a>
+
+    <form action='{{  request.past  }}' method='post' class='row g-0'>
+        <h2 class="g-3">課程編碼 : （1 ~ 120）</h2>
+        <label class="form-label " for='id'>
+            <input class='form-control' id='id' type="number" minlength=1 min=1 max=120 name='course_id' />
+            <label class="form-label " for='start_date'>
+                <h3 class="g-1">起始日期 : </h3>
+                <input class='form-control' id='start_date' type="date" min="2023-09-01" max="2024-01-31"
+                    name='r_s_date' />
+                <label class="form-label " for='end_date'>
+                    <h3>結束日期 : </h3>
+                    <input class='form-control' id='start_date' type="date" min="2023-09-01" max="2024-01-31"
+                        name='r_e_date' />
+
+                    <input type='submit' value='查詢' class='btn btn-outline-primary' />
+
+    </form>
+
+    <script src="../static/bootstrap-5.3.2-dist/js/popper.min.js"></script>
+    <script src="../static/bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

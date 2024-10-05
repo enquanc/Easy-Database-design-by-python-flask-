@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+{% import './pages.html' as pg %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href='../static/bootstrap-5.3.2-dist/css/bootstrap.min.css' rel='stylesheet' type='text/css' />
+    <link href='../static/styles/font.css' rel='stylesheet' type='text/css' />
+    <link href='../static/styles/nav.css' rel='stylesheet' type='text/css' />
+
+</head>
+
+<body>
+
+    <table class='table table-bordered  caption-top'>
+        <caption class="mx-2">
+
+            <a href="{{url_for('home')}}" class='btn btn-success'>Back to the homepage</a>
+
+            <h3>所有資料</h3>
+        </caption>
+        <!-- class="table-primary" -->
+        <thead>
+            <tr>
+                <th width="150">學號</th>
+                <th width="100">班級</th>
+                <th width="100">姓名</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for info in all_info %}
+            <tr>
+                <td>{{ info.student_id }}</td>
+                <td>{{ info.class_id}}</td>
+                <td>{{ info.s_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ pg.page(page_data,'all_student') }}
+    <script src="../static/bootstrap-5.3.2-dist/js/popper.min.js"></script>
+    <script src="../static/bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

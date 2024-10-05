@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href='../../static/bootstrap-5.3.2-dist/css/bootstrap.min.css' rel='stylesheet' type='text/css' />
+    <link href='../../static/styles/font.css' rel='stylesheet' type='text/css' />
+    <link href='../../static/styles/nav.css' rel='stylesheet' type='text/css' />
+
+</head>
+
+<body>
+    {%- for message in get_flashed_messages() %}
+    <script>
+        alert('{{ message }}')
+    </script>
+    {%- endfor %}
+
+    <h1 class="text-center"><br> 請輸入要更動的備忘錄內容 <br></h1>
+
+    <form action='{{request.path}}' method='POST' class="mx-5">
+        <h3 class="g-3"> 備忘錄內容 : </h3>
+        <label class="form-label " for='update_nr'>
+            <input class='form-control' id='update_nr' type="text" name='update_memo' />
+            <input type='submit' value='更新' class='btn btn-outline-primary' />
+    </form>
+
+    <table class='table table-bordered  caption-top'>
+        <caption class="mx-2">
+
+            <a href="{{url_for('home')}}" class='btn btn-success'>Back to the homepage</a>
+
+
+            <h3>欲更新之資料</h3>
+        </caption>
+        <!-- class="table-primary" -->
+        <thead>
+            <tr>
+                <th width="150">課程編號</th>
+                <th width="100">班級編號</th>
+                <th width="100">缺席人數</th>
+                <th width="200">缺席名單</th>
+                <th width="200">上課日期</th>
+                <th width="200">考試範圍</th>
+                <th width="250">備忘錄</th>
+                <th width="250">更新備忘錄</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for info in all_info %}
+            <tr>
+                <td>{{ info.course_id }}</td>
+                <td>{{ info.class_id}}</td>
+                <td>{{ info.absent_nr }}</td>
+                <td>{{ info.absent_list }}</td>
+                <td>{{ info.date }}</td>
+                <td>{{ info.test}}</td>
+                <td>{{ info.memo}}</td>
+                <td width="250" align="center">
+                    <a id=update_url href="/update_select_memo/{{ info.course_id}}/{{info.date}}">Update</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script src="../../static/bootstrap-5.3.2-dist/js/popper.min.js"></script>
+    <script src="../../static/bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
